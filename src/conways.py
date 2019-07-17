@@ -20,16 +20,15 @@ size = (WIN_SIZE, WIN_SIZE)
 screen = pygame.display.set_mode(size)
 
 # Set up initial state
-initial_state = [0] * (SQUARES_PER_LINE * SQUARES_PER_LINE)
+row = [0] * SQUARES_PER_LINE
+initial_state = []
+for i in range(SQUARES_PER_LINE):
+    initial_state.append(row.copy())
 
 # randomize it
-for row in range(SQUARES_PER_LINE):
-    for column in range(SQUARES_PER_LINE):
-        initial_state[row * SQUARES_PER_LINE + column] = random.randint(0, 1)
-# TARGET ANY COORDINATES=> arr[i] = row * SQUARES_PER_LINE + column
-# or
-# for i in range(len(initial_state)):
-#     initial_state[i] = random.randint(0, 1)
+for r in range(SQUARES_PER_LINE):
+    for col in range(SQUARES_PER_LINE):
+        initial_state[r][col] = random.randint(0, 1)
 
 
 # Add a title
@@ -50,6 +49,14 @@ while not done:
 
     # --- Game logic should go here
 
+    for r in range(len(initial_state)):
+        for c in range(len(initial_state[0])):
+            # check state of neigbours here
+            alive_neighbours = get_alive_neighbours(
+                r, c, initial_state, SQUARES_PER_LINE)
+
+        # based on number of dead or alive neighbours update new state
+
     # --- Screen-clearing code goes here
 
     # Here, we clear the screen to gray. Don't put other drawing commands
@@ -58,18 +65,20 @@ while not done:
 
     # --- Drawing code should go here
     y = MARGIN
-    i = 0  # counter variable
+    r = 0
     while y < WIN_SIZE:
+        c = 0
         x = MARGIN
         while x < WIN_SIZE:
-            if initial_state[i] == 0:
+            if initial_state[r][c] == 0:
                 pygame.draw.rect(screen, BLACK, pygame.Rect(
                     x, y, SQUARE_SIZE, SQUARE_SIZE))
             else:
                 pygame.draw.rect(screen, WHITE, pygame.Rect(
                     x, y, SQUARE_SIZE, SQUARE_SIZE))
             x += MARGIN + SQUARE_SIZE
-            i += 1
+            c += 1
+        r += 1
         y += MARGIN + SQUARE_SIZE
 
     # --- Go ahead and update the screen with what we've drawn.
