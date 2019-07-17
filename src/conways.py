@@ -44,6 +44,16 @@ while not done:
     screen.fill(GRAY)
 
     # --- Drawing code should go here
+    # pygame.draw.rect(screen, WHITE, pygame.Rect(20, 20, 20, 20))
+    y = MARGIN
+    i = 0  # counter variable
+    while y < WIN_SIZE:
+        x = MARGIN
+        while x < WIN_SIZE:
+            pygame.draw.rect(screen, BLACK, pygame.Rect(
+                x, y, SQUARE_SIZE, SQUARE_SIZE))
+            x += MARGIN + SQUARE_SIZE
+        y += MARGIN + SQUARE_SIZE
 
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
