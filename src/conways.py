@@ -5,9 +5,9 @@ import random
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (25, 25, 25)
-MARGIN = 3
-SQUARE_SIZE = 20
-SQUARES_PER_LINE = 25
+MARGIN = 2
+SQUARE_SIZE = 10
+SQUARES_PER_LINE = 80
 
 #  calculate the windowns size dynamically
 WIN_SIZE = (SQUARES_PER_LINE + 1) * MARGIN + SQUARES_PER_LINE * SQUARE_SIZE
@@ -89,9 +89,13 @@ def get_alive_neighbours(row, col, arr, row_len):
 def get_next_state(alive_neighbours, current_state):
     if not current_state and alive_neighbours == 3:
         return 1
-    elif current_state and (alive_neighbours == 3 or alive_neighbours == 2):
-        return 1
-    elif current_state and (alive_neighbours == 1 or alive_neighbours > 4):
+    elif current_state and alive_neighbours < 2:
+        return 0
+    elif current_state and alive_neighbours == 3:
+        return current_state
+    elif current_state and alive_neighbours == 2:
+        return current_state
+    elif current_state and alive_neighbours > 3:
         return 0
     else:
         return current_state
