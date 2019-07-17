@@ -40,6 +40,51 @@ done = False
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
 
+
+# Get alive neighbours:
+def get_alive_neighbours(row, col, arr, row_len):
+    alive_neighbours = 0
+
+    left = col - 1 >= 0
+    right = col + 1 < row_len
+    top = row - 1 >= 0
+    bot = row + 1 < row_len
+
+    # left
+    if left and arr[row][col - 1]:
+        alive_neighbours += 1
+
+    # right
+    if right and arr[row][col + 1]:
+        alive_neighbours += 1
+
+    # top
+    if top and arr[row - 1][col]:
+        alive_neighbours += 1
+
+    # top left
+    if top and left and arr[row - 1][col - 1]:
+        alive_neighbours += 1
+
+    # top right
+    if top and right and arr[row - 1][col + 1]:
+        alive_neighbours += 1
+
+    # bot
+    if bot and arr[row + 1][col]:
+        alive_neighbours += 1
+
+    # bot left
+    if bot and left and arr[row + 1][col - 1]:
+        alive_neighbours += 1
+
+    # bot right
+    if bot and right and arr[row + 1][col + 1]:
+        alive_neighbours += 1
+
+    return alive_neighbours
+
+
 # -------- Main Program Loop -----------
 while not done:
     # --- Main event loop
