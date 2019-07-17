@@ -23,10 +23,11 @@ screen = pygame.display.set_mode(size)
 initial_state = [0] * (SQUARES_PER_LINE * SQUARES_PER_LINE)
 
 # randomize it
-for x in range(SQUARES_PER_LINE):
-    for y in range(SQUARES_PER_LINE):
-        initial_state[x * SQUARES_PER_LINE + y] = random.randint(0, 1)
-# TARGET ANY COORDINATES=> arr[x] = y * SQUARES_PER_LINE + x
+for row in range(SQUARES_PER_LINE):
+    for column in range(SQUARES_PER_LINE):
+        initial_state[row * SQUARES_PER_LINE + column] = random.randint(0, 1)
+# TARGET ANY COORDINATES=> arr[i] = row * SQUARES_PER_LINE + column
+# or
 # for i in range(len(initial_state)):
 #     initial_state[i] = random.randint(0, 1)
 
