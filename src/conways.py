@@ -85,6 +85,18 @@ def get_alive_neighbours(row, col, arr, row_len):
     return alive_neighbours
 
 
+# Get next state:
+def get_next_state(alive_neighbours, current_state):
+    if not current_state and alive_neighbours == 3:
+        return 1
+    elif current_state and (alive_neighbours == 3 or alive_neighbours == 2):
+        return 1
+    elif current_state and (alive_neighbours == 1 or alive_neighbours > 4):
+        return 0
+    else:
+        return current_state
+
+
 # -------- Main Program Loop -----------
 while not done:
     # --- Main event loop
@@ -94,13 +106,23 @@ while not done:
 
     # --- Game logic should go here
 
+    new_row = [0] * SQUARES_PER_LINE
+    new_state = []
+    for i in range(SQUARES_PER_LINE):
+        new_state.append(new_row.copy())
+
     for r in range(len(initial_state)):
         for c in range(len(initial_state[0])):
             # check state of neigbours here
             alive_neighbours = get_alive_neighbours(
                 r, c, initial_state, SQUARES_PER_LINE)
 
-        # based on number of dead or alive neighbours update new state
+            # update new state for that square
+            new_state[r][c] = get_next_state(
+                alive_neighbours, initial_state[r][c])
+
+    # update new state
+    initial_state = new_state
 
     # --- Screen-clearing code goes here
 
