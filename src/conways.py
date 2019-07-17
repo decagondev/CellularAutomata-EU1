@@ -19,6 +19,18 @@ pygame.init()
 size = (WIN_SIZE, WIN_SIZE)
 screen = pygame.display.set_mode(size)
 
+# Set up initial state
+initial_state = [0] * (SQUARES_PER_LINE * SQUARES_PER_LINE)
+
+# randomize it
+for y in range(SQUARES_PER_LINE):
+    for x in range(SQUARES_PER_LINE):
+        initial_state[x * SQUARES_PER_LINE + y] = random.randint(0, 1)
+# TARGET ANY COORDINATES=> y * SQUARES_PER_LINE + x
+# for i in range(len(initial_state)):
+#     initial_state[i] = random.randint(0, 1)
+
+
 # Add a title
 pygame.display.set_caption("Conway's Game of Life")
 
@@ -44,15 +56,19 @@ while not done:
     screen.fill(GRAY)
 
     # --- Drawing code should go here
-    # pygame.draw.rect(screen, WHITE, pygame.Rect(20, 20, 20, 20))
     y = MARGIN
     i = 0  # counter variable
     while y < WIN_SIZE:
         x = MARGIN
         while x < WIN_SIZE:
-            pygame.draw.rect(screen, BLACK, pygame.Rect(
-                x, y, SQUARE_SIZE, SQUARE_SIZE))
+            if initial_state[i] == 0:
+                pygame.draw.rect(screen, BLACK, pygame.Rect(
+                    x, y, SQUARE_SIZE, SQUARE_SIZE))
+            else:
+                pygame.draw.rect(screen, WHITE, pygame.Rect(
+                    x, y, SQUARE_SIZE, SQUARE_SIZE))
             x += MARGIN + SQUARE_SIZE
+            i += 1
         y += MARGIN + SQUARE_SIZE
 
     # --- Go ahead and update the screen with what we've drawn.
